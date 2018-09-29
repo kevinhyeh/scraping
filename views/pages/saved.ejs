@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- head.ejs -->
+    <% include ../partials/head %>
+</head>
+<body>
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <% for (var b in results) { %> 
+        <div class="article">
+            <a href="<%= results[b].link %>" target="_blank">
+                <h3 class="article-title"> 
+                    <%= results[b].title %>
+                </h3>
+            </a>
+            <p class="article-summary"> 
+                <%= results[b].summary %>
+            </p>
+            <p class="article-author"> 
+                <%= results[b].author %>
+            </p>
+            <form method="POST" action="/delete">
+                <input type="text" name="favtitle" value="<%= results[b].title %>" hidden> 
+                <button type="submit">Delete Article</button>
+            </form>
+        </div>
+    <% } %>
+
+</body>
+
+</html>

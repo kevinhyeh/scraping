@@ -6,8 +6,14 @@ const cheerio = require('cheerio');
 const request = require('request');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("views"));
 app.use(bodyParser.json());
+
+app.use(express.static("views"));
+
+let databaseUrl = 'articles';
+let collections = ['favorites'];
+
+let db = mongojs(databaseUrl, collections);
 
 app.set('view engine', 'ejs');
 
@@ -21,7 +27,7 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
         let link = $(element).find('h3').children('a').attr('href');
         let summary = $(element).find('div.story-description').text();
         let author = $(element).find('span.author').text();
-        let image = $(element).find('div.story-image').children('a').attr('href')
+        let image = $(element).find('div.story-image').children('a').attr('href');
 
         results.push({
             title: title,
@@ -38,6 +44,37 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
         }
         res.render('pages/', articles);
         // res.json(articles);
+    })
+
+    app.get('/saved', function(req, res) {
+        db.favorites.find({}, function(error, found) {
+            let favArticles = {
+                results: found
+            }
+            res.render('pages/saved', favArticles)
+            // res.json(favArticles);
+        });
+    });
+
+    app.post('/save', function(req, res) {
+        let title = req.body.title;
+        let summary = req.body.summary;
+        let author = req.body.author;
+        let link = req.body.link;
+        db.favorites.find({title: title}, function(error, found) {
+            if (found.length > 0) {
+                console.log('already saved')
+            } else {
+                db.favorites.insert({title: title, summary: summary, author: author, link: link});
+                res.redirect('/');
+            }
+        }); 
+    });
+
+    app.post('/delete', function(req, res) {
+        let favTitle = req.body.favtitle;
+        db.favorites.remove({title: favTitle});
+        res.redirect('/saved')
     })
     // console.log(results);
 });

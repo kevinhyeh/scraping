@@ -8,23 +8,34 @@
 
 <body>
     <header>
-        
+        <% include ../partials/header %>
     </header>
 
+<!--     <form method="GET" action="/">
+        <button type="submit"></button>
+    </form> -->
+
     <% for (var a in results) { %> 
-    <a href="<%= results[a].link %>">
         <div class="article">
-            <h3 class="article-title">
-                <%= results[a].title %>
-            </h3>
-            <p class="article-summary">
+            <a href="<%= results[a].link %>" target="_blank">
+                <h3 class="article-title"> 
+                    <%= results[a].title %>
+                </h3>
+            </a>
+            <p class="article-summary"> 
                 <%= results[a].summary %>
             </p>
             <p class="article-author"> 
                 <%= results[a].author %>
             </p>
+            <form method="POST" action="/save"> 
+                <input type="text" name="title" value="<%= results[a].title %>" hidden>
+                <input type="text" name="summary" value="<%= results[a].summary %>" hidden>
+                <input type="text" name="author" value="<%= results[a].author %>" hidden>
+                <input type="text" name="link" value="<%= results[a].link %>" hidden>
+                <button type="submit">Save Article</button>
+            </form>
         </div>
-    </a>
     <% } %>
 
 </body>
