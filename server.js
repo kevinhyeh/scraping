@@ -1,9 +1,9 @@
-var express = require('express');
-var app = express();
-var mongojs = require('mongojs');
-var bodyParser = require('body-parser');
-var cheerio = require('cheerio');
-var request = require('request');
+const express = require('express');
+const app = express();
+const mongojs = require('mongojs');
+const bodyParser = require('body-parser');
+const cheerio = require('cheerio');
+const request = require('request');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("views"));
@@ -12,15 +12,16 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', function(error, response, html) {
-    var $ = cheerio.load(html);
-    var results = [];
+    let $ = cheerio.load(html);
+    let results = [];
 
+    // scraping website and storing in results array
     $('div.story-list-story').each(function(i, element) {
-        var title = $(element).find('h3').text();
-        var link = $(element).find('h3').children('a').attr('href');
-        var summary = $(element).find('div.story-description').text();
-        var author = $(element).find('span.author').text();
-        var image = $(element).find('div.story-image').children('a').attr('href')
+        let title = $(element).find('h3').text();
+        let link = $(element).find('h3').children('a').attr('href');
+        let summary = $(element).find('div.story-description').text();
+        let author = $(element).find('span.author').text();
+        let image = $(element).find('div.story-image').children('a').attr('href')
 
         results.push({
             title: title,
@@ -29,12 +30,19 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
             author: author,
             image: image
         });
-
     })
-    console.log(results);
-})
+
+    app.get('/', function(req, res) {
+        let articles = {
+            results: results
+        }
+        res.render('pages/', articles);
+        // res.json(articles);
+    })
+    // console.log(results);
+});
 
 
-// app.listen(3000, function() {
-//     console.log("listening on 3000");
-// });
+app.listen(3000, function() {
+    console.log("listening on 3000");
+});

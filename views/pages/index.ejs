@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- head.ejs -->
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <header>
+        
+    </header>
+
+    <% for (var a in results) { %> 
+    <a href="<%= results[a].link %>">
+        <div class="article">
+            <h3 class="article-title">
+                <%= results[a].title %>
+            </h3>
+            <p class="article-summary">
+                <%= results[a].summary %>
+            </p>
+            <p class="article-author"> 
+                <%= results[a].author %>
+            </p>
+        </div>
+    </a>
+    <% } %>
+
+</body>
+
+</html>
