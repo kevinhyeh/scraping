@@ -1,0 +1,123 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 10px;
+    background-image: url('../images/tennis-court.jpg');
+    background-position: top;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+@mixin clearfix {
+    &:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+h2 {
+    text-align: center;
+    margin: 4rem auto 1rem;
+    background: white;
+    width: 15rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    &:hover {
+        background-color: yellow;
+    }
+    a {
+        color: #000;
+        font-size: 3rem;
+        text-decoration: none;
+    }
+}
+
+.content {
+    // margin: auto;
+    // width: 90%;
+    @include clearfix;
+
+    .article {
+        width: 32rem;
+        margin: 3rem 5rem;
+        border-radius: .5rem;
+        border: 1px solid #000;
+        transform: skewX(-5deg);
+        display: inline-block;
+        padding: 4rem 2rem;
+        background-color: rgba(255,255,255,0.8);
+
+        & * {
+            transform: skewX(5deg);
+        }
+        img {
+            width: 15rem;
+            // text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        &-title {
+            font-size: 2.5rem;
+            color: #000;
+            &:hover {
+                color: red;
+            }
+        }
+
+        &-summary {
+            font-size: 1.6rem;
+        }
+
+        &-author {
+            font-size: 1.4rem;
+        }
+        
+        .notes-delete {
+            display: inline-block;
+            transform: skewX(0deg);
+            border: 1px solid #000;
+            border-radius: .5rem;
+            margin: 0 1rem 2rem 0;
+        }
+        &-notes {
+            display: inline-block;
+            font-size: 1.4rem;
+            margin: .5rem;
+        }
+
+        .aa {
+            display: inline-block;
+            margin-right: 1rem;
+
+        }
+
+        h4 {
+            font-size: 2rem;
+
+        }
+
+        form {
+            transform: skewX(0deg);
+        }
+
+        button {
+            font-size: 1.4rem;
+            background-color: yellow;
+            cursor: pointer;
+            border-radius: .5rem;
+            &:hover {
+                color: #fff;
+                background-color: rgba(0,0,0, 1);
+            }
+        }
+    }
+}

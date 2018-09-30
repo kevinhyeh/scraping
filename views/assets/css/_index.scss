@@ -1,0 +1,38 @@
+//article
+.content {
+    margin: auto;
+    // width: 90%;
+
+    @include clearfix;
+
+    .article {
+        width: 32rem;
+        height: 45rem;
+        margin: 0 2rem;
+        float: left;
+
+        img {
+            width: 20rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        &-title {
+            font-size: 2rem;
+            color: #000;
+            &:hover {
+                color: red;
+            }
+        }
+
+        &-summary {
+            font-size: 1.6rem;
+        }
+
+        &-author {
+            font-size: 1.4rem;
+        }
+    }
+}

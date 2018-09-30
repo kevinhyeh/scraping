@@ -27,7 +27,7 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
         let link = $(element).find('h3').children('a').attr('href');
         let summary = $(element).find('div.story-description').text();
         let author = $(element).find('span.author').text();
-        let image = $(element).find('div.story-image').children('a').attr('href');
+        let image = $(element).find('div.story-image').find('img').attr('data-hi-res-src');
 
         results.push({
             title: title,
@@ -43,7 +43,7 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
             results: results
         }
         res.render('pages/', articles);
-        // res.json(articles);
+        // console.log(articles);
     })
 
     app.get('/saved', function(req, res) {

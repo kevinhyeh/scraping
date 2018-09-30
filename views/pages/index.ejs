@@ -14,9 +14,14 @@
 <!--     <form method="GET" action="/">
         <button type="submit"></button>
     </form> -->
-
-    <% for (var a in results) { %> 
+    <div class="content">
+            <% for (var a in results) { %> 
         <div class="article">
+            <img src="<% if(results[a].image === undefined) { %>
+                ../assets/images/tennis-pic.png
+            <% } else { %>
+                <%= results[a].image %>
+            <% } %>" alt="Tennis Image">
             <a href="<%= results[a].link %>" target="_blank">
                 <h3 class="article-title"> 
                     <%= results[a].title %>
@@ -37,6 +42,8 @@
             </form>
         </div>
     <% } %>
+    </div>
+
 
 </body>
 

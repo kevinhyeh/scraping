@@ -4,23 +4,20 @@
 <head>
     <!-- head.ejs -->
     <% include ../partials/head %>
-    <style>
-        .article-notes, .aa {
-            display: inline-block;
-        }
-
-        .aa {
-            margin-left: 10px
-        }
-    </style>
 </head>
 <body>
     <header>
         <% include ../partials/header %>
     </header>
 
-    <% for (var b in results) { %> 
+    <div class="content">
+            <% for (var b in results) { %> 
         <div class="article">
+            <img src="<% if(results[b].image === undefined) { %>
+                ../assets/images/tennis-pic.png
+            <% } else { %>
+                <%= results[a].image %>
+            <% } %>" alt="Tennis Image">
             <a href="<%= results[b].link %>" target="_blank">
                 <h3 class="article-title"> 
                     <%= results[b].title %>
@@ -34,16 +31,17 @@
             </p>
             <h4>Notes</h4>
             <% for (var c in results[b].comments) { %> 
-            <p class="article-notes">
-                <%= results[b].comments[c] %> 
-                <span>
-                    <form class="aa" method="POST" action="deleteNotes">
-                    <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
-                    <input name="deleteNote" type="text" value="<%= results[b].comments[c] %>" hidden>
-                    <button type="submit">X</button>
-                    </form>
-                </span>
-            </p>
+            <div class="notes-delete">
+                <p class="article-notes">
+                    <%= results[b].comments[c] %> 
+                </p>
+                <form class="aa" method="POST" action="deleteNotes">
+                <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
+                <input name="deleteNote" type="text" value="<%= results[b].comments[c] %>" hidden>
+                <button type="submit">X</button>
+                </form>
+            </div>
+            
             <% } %>
             <form method="POST" action="/addNotes">
                 <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
@@ -54,8 +52,11 @@
                 <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
                 <button type="submit">Delete Article</button>
             </form>
+            <div class="image"></div>
         </div>
     <% } %>
+
+    </div>
 
 </body>
 
