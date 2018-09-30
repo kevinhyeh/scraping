@@ -4,6 +4,15 @@
 <head>
     <!-- head.ejs -->
     <% include ../partials/head %>
+    <style>
+        .article-notes, .aa {
+            display: inline-block;
+        }
+
+        .aa {
+            margin-left: 10px
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -23,8 +32,26 @@
             <p class="article-author"> 
                 <%= results[b].author %>
             </p>
+            <h4>Notes</h4>
+            <% for (var c in results[b].comments) { %> 
+            <p class="article-notes">
+                <%= results[b].comments[c] %> 
+                <span>
+                    <form class="aa" method="POST" action="deleteNotes">
+                    <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
+                    <input name="deleteNote" type="text" value="<%= results[b].comments[c] %>" hidden>
+                    <button type="submit">X</button>
+                    </form>
+                </span>
+            </p>
+            <% } %>
+            <form method="POST" action="/addNotes">
+                <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
+                <input type="text" placeholder="New Note" name="addNote">
+                <button type="submit">Add Note</button>
+            </form>
             <form method="POST" action="/delete">
-                <input type="text" name="favtitle" value="<%= results[b].title %>" hidden> 
+                <input type="text" name="favTitle" value="<%= results[b].title %>" hidden> 
                 <button type="submit">Delete Article</button>
             </form>
         </div>

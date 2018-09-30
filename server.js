@@ -65,14 +65,31 @@ request('https://www.washingtonpost.com/sports/tennis/?utm_term=.8009ed9a57c5', 
             if (found.length > 0) {
                 console.log('already saved')
             } else {
-                db.favorites.insert({title: title, summary: summary, author: author, link: link});
+                db.favorites.insert({title: title, summary: summary, author: author, link: link, comments: []});
                 res.redirect('/');
             }
         }); 
     });
 
+    app.post('/addNotes', function(req, res) {
+        let favTitle = req.body.favTitle;
+        let newNote = req.body.addNote;
+        db.favorites.update({title: favTitle}, {$push: {comments: newNote}});
+        res.redirect('/saved')
+        // res.json(newNote);
+    })
+
+    app.post('/deleteNotes', function(req, res) {
+        let favTitle = req.body.favTitle;
+        let deleteNote = req.body.deleteNote;
+        db.favorites.update({title: favTitle}, {$pull: {comments: deleteNote}});
+        res.redirect('/saved');
+        // res.json(deleteNote)
+        // console.log(typeof test);
+    })
+
     app.post('/delete', function(req, res) {
-        let favTitle = req.body.favtitle;
+        let favTitle = req.body.favTitle;
         db.favorites.remove({title: favTitle});
         res.redirect('/saved')
     })
